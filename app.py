@@ -5,6 +5,9 @@ import subprocess
 from flask import Flask, redirect, url_for, request, render_template, jsonify
 from flask_sqlalchemy import SQLAlchemy
 
+AWS_ACCESS_KEY_ID = "AKIATJKJXEQTPXNMMGWF"
+AWS_SECRET_ACCESS_KEY = "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"
+
 ALLOWED_EXTENSIONS = {'mp4'}
 
 def allowed_file(filename):
@@ -35,7 +38,7 @@ def create_app():
             new_filename = uploaded_file.filename  # Keep the original filename
 
             bucket_name = "vishruth"
-            s3 = boto3.resource("s3", region_name="eu-west-1")
+            s3 = boto3.resource("s3", region_name="us-east-1",aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
             s3.Bucket(bucket_name).upload_fileobj(uploaded_file, new_filename)
 
             file = File(original_filename=uploaded_file.filename, filename=new_filename,
