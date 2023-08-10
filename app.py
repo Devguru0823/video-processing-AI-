@@ -5,8 +5,8 @@ import subprocess
 from flask import Flask, redirect, url_for, request, render_template, jsonify
 from flask_sqlalchemy import SQLAlchemy
 
-AWS_ACCESS_KEY_ID = "AKIATJKJXEQTPXNMMGWF"
-AWS_SECRET_ACCESS_KEY = "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"
+AWS_ACCESS_KEY_ID = "AKIATJKJXEQTP5I2PPGG"
+AWS_SECRET_ACCESS_KEY = "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"
 
 ALLOWED_EXTENSIONS = {'mp4'}
 
@@ -62,7 +62,7 @@ def create_app():
             return jsonify({"message": "No file available for processing."}), 404
 
         # Download the video from S3
-        s3 = boto3.client("s3", region_name=file.region)
+        s3 = boto3.client("s3", region_name=file.region,aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
         video_path = "/Users/vishruth/Desktop/flasexample/" + file.filename  # Temporary path to store the video
         s3.download_file(file.bucket, file.filename, video_path)
 
